@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+
+// this view will be showing:
+//the tab view for the buyer (ProductsListViw/OrdersHistoryView)
+//or will have one view for the hustler (OrdersListView-> OrddeDetialView)
+
 struct ContentView: View {
     var body: some View {
         VStack {
