@@ -13,19 +13,28 @@ import SwiftUI
 //or will have one view for the hustler (OrdersListView-> OrddeDetialView)
 
 struct ContentView: View {
+    
+    @Binding var rootScreen :RootView
+    @EnvironmentObject var dataSource: DataSoruce
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            ProductsListView()
+                .tabItem {
+                    Label("Products", systemImage: "list.dash")
+                }
+            
+            OrdersHistoryView()
+                .tabItem {
+                    Label("Order History", systemImage: "clock")
+                }
         }
-        .padding()
+        .navigationTitle("Hustler")
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

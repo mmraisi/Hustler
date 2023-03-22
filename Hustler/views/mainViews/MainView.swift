@@ -6,15 +6,36 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 // this view will be used to decide wether the user is buyer or hustler
 // the view will consist of two buttons (one for buer and the other is hustler)
 // based on the user selection, the user will be redirected to the Login view
 
 struct MainView: View {
+    var dataSource : DataSoruce = DataSoruce()
+    private let fireAuthHelper = FireAuthHelper()
+    
+    
+    @State private var root : RootView = .Login
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+        
+        NavigationView{
+            switch root{
+            case .Login:
+                SignInView(rootScreen : $root).environmentObject(dataSource).environmentObject(fireAuthHelper)
+            case .BUYER_HOME:
+                ContentView(rootScreen : $root).environmentObject(dataSource)
+            case .HUSTLER_HOME:
+                OrdersListView().environmentObject(dataSource)
+            }
+        }//NavigationView
+        .navigationViewStyle(StackNavigationViewStyle())
+        
+    }//body
 }
 
 struct MainView_Previews: PreviewProvider {

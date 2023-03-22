@@ -7,9 +7,14 @@
 
 import Foundation
 
+enum UserType : String, CaseIterable{
+    case BUYER, HUSTLER
+}
+
 class DataSoruce: ObservableObject {
     @Published var store : Store = loadStore()
     @Published var ordersHistoryList : [Order] = loadOrderHistoryList()
+    @Published var currentUserType : UserType = UserType.BUYER
     
     static private func loadStore()-> Store{
         let newStore = Store()

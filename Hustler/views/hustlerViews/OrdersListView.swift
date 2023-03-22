@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrdersListView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Welcome to the Order List View, you are a hustler")
     }
 }
 
