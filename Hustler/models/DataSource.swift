@@ -18,7 +18,7 @@ class DataSoruce: ObservableObject {
     
     static private func loadStore()-> Store{
         let newStore = Store()
-        newStore.fillProducts()
+//        newStore.fillProducts()
         return newStore
     }
     

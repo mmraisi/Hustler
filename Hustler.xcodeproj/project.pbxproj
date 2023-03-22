@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16397A1929CB91B800BD05EA /* FireDBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16397A1829CB91B800BD05EA /* FireDBHelper.swift */; };
+		16397A1B29CB997A00BD05EA /* ProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16397A1A29CB997A00BD05EA /* ProductItem.swift */; };
+		16397A1E29CB9BE900BD05EA /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 16397A1D29CB9BE900BD05EA /* URLImage */; };
 		8313DA7229C7FBBB00BE7AC2 /* HustlerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313DA7129C7FBBB00BE7AC2 /* HustlerApp.swift */; };
 		8313DA7429C7FBBB00BE7AC2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313DA7329C7FBBB00BE7AC2 /* ContentView.swift */; };
 		8313DA7629C7FBBE00BE7AC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8313DA7529C7FBBE00BE7AC2 /* Assets.xcassets */; };
@@ -34,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16397A1829CB91B800BD05EA /* FireDBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireDBHelper.swift; sourceTree = "<group>"; };
+		16397A1A29CB997A00BD05EA /* ProductItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductItem.swift; sourceTree = "<group>"; };
 		8313DA6E29C7FBBB00BE7AC2 /* Hustler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hustler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8313DA7129C7FBBB00BE7AC2 /* HustlerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HustlerApp.swift; sourceTree = "<group>"; };
 		8313DA7329C7FBBB00BE7AC2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,6 +70,7 @@
 			files = (
 				8313DA8329C7FFF700BE7AC2 /* FirebaseAuth in Frameworks */,
 				8313DA8529C7FFF700BE7AC2 /* FirebaseFirestore in Frameworks */,
+				16397A1E29CB9BE900BD05EA /* URLImage in Frameworks */,
 				8313DA8729C7FFF700BE7AC2 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				8313DAA929C80A2800BE7AC2 /* FireAuthHelper.swift */,
+				16397A1829CB91B800BD05EA /* FireDBHelper.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -147,6 +154,7 @@
 				8313DA9729C803AE00BE7AC2 /* ProductDetailView.swift */,
 				8313DA9929C803CB00BE7AC2 /* OrdersHistoryView.swift */,
 				83B5591929CAA51D00E14D16 /* OrderCheckoutView.swift */,
+				16397A1A29CB997A00BD05EA /* ProductItem.swift */,
 			);
 			path = buyerViews;
 			sourceTree = "<group>";
@@ -192,6 +200,7 @@
 				8313DA8229C7FFF700BE7AC2 /* FirebaseAuth */,
 				8313DA8429C7FFF700BE7AC2 /* FirebaseFirestore */,
 				8313DA8629C7FFF700BE7AC2 /* FirebaseFirestoreSwift */,
+				16397A1D29CB9BE900BD05EA /* URLImage */,
 			);
 			productName = Hustler;
 			productReference = 8313DA6E29C7FBBB00BE7AC2 /* Hustler.app */;
@@ -223,6 +232,7 @@
 			mainGroup = 8313DA6529C7FBBB00BE7AC2;
 			packageReferences = (
 				8313DA8129C7FFF700BE7AC2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				16397A1C29CB9BE900BD05EA /* XCRemoteSwiftPackageReference "url-image" */,
 			);
 			productRefGroup = 8313DA6F29C7FBBB00BE7AC2 /* Products */;
 			projectDirPath = "";
@@ -257,11 +267,13 @@
 				8313DAA229C804CE00BE7AC2 /* OrderDetailView.swift in Sources */,
 				8313DAA829C8083D00BE7AC2 /* DataSource.swift in Sources */,
 				8313DA9429C802F100BE7AC2 /* MainView.swift in Sources */,
+				16397A1929CB91B800BD05EA /* FireDBHelper.swift in Sources */,
 				8313DA7229C7FBBB00BE7AC2 /* HustlerApp.swift in Sources */,
 				8313DA8C29C8024E00BE7AC2 /* Product.swift in Sources */,
 				8313DAAA29C80A2800BE7AC2 /* FireAuthHelper.swift in Sources */,
 				8313DA9629C8030F00BE7AC2 /* ProductsListView.swift in Sources */,
 				8313DA8E29C8025700BE7AC2 /* Store.swift in Sources */,
+				16397A1B29CB997A00BD05EA /* ProductItem.swift in Sources */,
 				8313DA9229C802D700BE7AC2 /* SignUpView.swift in Sources */,
 				8313DAAE29C80FDE00BE7AC2 /* Customer.swift in Sources */,
 				8313DA9029C802CC00BE7AC2 /* SignInView.swift in Sources */,
@@ -471,6 +483,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		16397A1C29CB9BE900BD05EA /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		8313DA8129C7FFF700BE7AC2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -482,6 +502,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		16397A1D29CB9BE900BD05EA /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 16397A1C29CB9BE900BD05EA /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
 		8313DA8229C7FFF700BE7AC2 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8313DA8129C7FFF700BE7AC2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

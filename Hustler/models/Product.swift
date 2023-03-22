@@ -62,5 +62,7 @@ struct Product: Identifiable, Codable, Hashable{
         }
     
     
-    
+    func printInfo()-> String{
+        return("name: \(self.pName)")
+    }
 }

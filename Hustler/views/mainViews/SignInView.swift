@@ -40,11 +40,13 @@ struct SignInView: View {
                     .padding()
                 
                 TextField("Username", text: $username)
+                    .autocapitalization(.none)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
                     .padding(.bottom, 10)
                 
                 SecureField("Password", text: $password)
+                    .autocapitalization(.none)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
                 .padding(.bottom, 10)

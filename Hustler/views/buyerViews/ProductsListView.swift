@@ -8,13 +8,22 @@
 import SwiftUI
 
 struct ProductsListView: View {
+    @EnvironmentObject var dataSource:DataSoruce
+    @State private var store: Store = Store()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Section(header: Text(store.name).font(.headline)){
+                List{
+                    ForEach(dataSource.store.productsList){ product in
+                        ProductItem(product: product)
+                    }
+                }
+                .background(Color.blue)
+                .frame(height: 500)
+            }
+            
+            Spacer()
+        }
     }
 }
 
-struct ProductsListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductsListView()
-    }
-}

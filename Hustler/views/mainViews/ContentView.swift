@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 
 // this view will be showing:
@@ -18,18 +19,27 @@ struct ContentView: View {
     @EnvironmentObject var dataSource: DataSoruce
     
     var body: some View {
-        TabView {
-            ProductsListView()
-                .tabItem {
-                    Label("Products", systemImage: "list.dash")
-                }
-            
-            OrdersHistoryView()
-                .tabItem {
-                    Label("Order History", systemImage: "clock")
-                }
+        VStack{
+            TabView {
+                ProductsListView()
+                    .tabItem {
+                        Label("Products", systemImage: "list.dash")
+                    }
+                
+                OrdersHistoryView()
+                    .tabItem {
+                        Label("Order History", systemImage: "clock")
+                    }
+            }
+            .navigationTitle("Hustler")
+            .navigationBarItems(leading: HStack {
+                Image(systemName: "person.circle.fill")
+                Text((Auth.auth().currentUser?.email)!)
+                                    .font(.headline)
+                
+            },trailing: Text("Sign Out"))
+.background(Color.orange)
         }
-        .navigationTitle("Hustler")
     }
 }
 
