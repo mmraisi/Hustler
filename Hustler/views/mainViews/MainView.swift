@@ -17,6 +17,7 @@ import FirebaseAuth
 struct MainView: View {
     var dataSource : DataSoruce = DataSoruce()
     private let fireAuthHelper = FireAuthHelper()
+    private let locationHelper = LocationHelper()
     
     
     @State private var root : RootView = .Login
@@ -28,7 +29,7 @@ struct MainView: View {
             case .Login:
                 SignInView(rootScreen : $root).environmentObject(dataSource).environmentObject(fireAuthHelper)
             case .BUYER_HOME:
-                ContentView(rootScreen : $root).environmentObject(dataSource)
+                ContentView(rootScreen : $root).environmentObject(dataSource).environmentObject(locationHelper)
             case .HUSTLER_HOME:
                 OrdersListView().environmentObject(dataSource)
             }

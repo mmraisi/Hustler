@@ -17,6 +17,7 @@ struct ContentView: View {
     
     @Binding var rootScreen :RootView
     @EnvironmentObject var dataSource: DataSoruce
+    @EnvironmentObject var locationHelper : LocationHelper
     
     var body: some View {
         VStack{
@@ -37,8 +38,21 @@ struct ContentView: View {
                 Text((Auth.auth().currentUser?.email)!)
                                     .font(.headline)
                 
-            },trailing: Text("Sign Out"))
-.background(Color.orange)
+            },trailing: HStack{
+//                Button(action: {
+//
+//                }){
+//                    Image(systemName: "cart")
+//                        .foregroundColor(Color.black)
+//                }
+                
+                Button(action: {
+                    
+                }){
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .foregroundColor(Color.black)
+                }
+            })
         }
     }
 }

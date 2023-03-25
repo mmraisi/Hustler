@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		163243AF29CEE66000074F58 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163243AE29CEE66000074F58 /* CartView.swift */; };
+		163243B129CEEE1400074F58 /* LocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163243B029CEEE1400074F58 /* LocationHelper.swift */; };
 		16397A1929CB91B800BD05EA /* FireDBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16397A1829CB91B800BD05EA /* FireDBHelper.swift */; };
 		16397A1B29CB997A00BD05EA /* ProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16397A1A29CB997A00BD05EA /* ProductItem.swift */; };
 		16397A1E29CB9BE900BD05EA /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 16397A1D29CB9BE900BD05EA /* URLImage */; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		163243AE29CEE66000074F58 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
+		163243B029CEEE1400074F58 /* LocationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
 		16397A1829CB91B800BD05EA /* FireDBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireDBHelper.swift; sourceTree = "<group>"; };
 		16397A1A29CB997A00BD05EA /* ProductItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductItem.swift; sourceTree = "<group>"; };
 		8313DA6E29C7FBBB00BE7AC2 /* Hustler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hustler.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +135,7 @@
 			children = (
 				8313DAA929C80A2800BE7AC2 /* FireAuthHelper.swift */,
 				16397A1829CB91B800BD05EA /* FireDBHelper.swift */,
+				163243B029CEEE1400074F58 /* LocationHelper.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 				8313DA9929C803CB00BE7AC2 /* OrdersHistoryView.swift */,
 				83B5591929CAA51D00E14D16 /* OrderCheckoutView.swift */,
 				16397A1A29CB997A00BD05EA /* ProductItem.swift */,
+				163243AE29CEE66000074F58 /* CartView.swift */,
 			);
 			path = buyerViews;
 			sourceTree = "<group>";
@@ -273,9 +279,11 @@
 				8313DAAA29C80A2800BE7AC2 /* FireAuthHelper.swift in Sources */,
 				8313DA9629C8030F00BE7AC2 /* ProductsListView.swift in Sources */,
 				8313DA8E29C8025700BE7AC2 /* Store.swift in Sources */,
+				163243B129CEEE1400074F58 /* LocationHelper.swift in Sources */,
 				16397A1B29CB997A00BD05EA /* ProductItem.swift in Sources */,
 				8313DA9229C802D700BE7AC2 /* SignUpView.swift in Sources */,
 				8313DAAE29C80FDE00BE7AC2 /* Customer.swift in Sources */,
+				163243AF29CEE66000074F58 /* CartView.swift in Sources */,
 				8313DA9029C802CC00BE7AC2 /* SignInView.swift in Sources */,
 				83B5591E29CAAA7000E14D16 /* RootView.swift in Sources */,
 				8313DAAC29C80F9100BE7AC2 /* Order.swift in Sources */,
@@ -412,6 +420,7 @@
 				DEVELOPMENT_TEAM = PY37RTU33V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Hustler needs your location to continue";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -441,6 +450,7 @@
 				DEVELOPMENT_TEAM = PY37RTU33V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Hustler needs your location to continue";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

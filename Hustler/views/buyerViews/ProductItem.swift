@@ -6,7 +6,7 @@ struct ProductItem : View {
     var  product : Product
     
     var body: some View {
-        NavigationLink(destination: ProductsListView()) {
+        NavigationLink(destination: ProductDetailView(product: product)) {
             HStack {
                 URLImage(URL(string: product.pImageURI)!) { image in
                     image
