@@ -10,13 +10,12 @@ import Firebase
 import FirebaseCore
 @main
 struct HustlerApp: App {
-    
     init(){
             FirebaseApp.configure()
         }
     
     var body: some Scene {
         WindowGroup {
-            MainView()        }
+            MainView()   }
     }
 }

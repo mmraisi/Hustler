@@ -2,9 +2,8 @@ import SwiftUI
 import URLImage
 struct ProductItem : View {
     // the following is the custom list Item
-    
+
     var  product : Product
-    
     var body: some View {
         NavigationLink(destination: ProductDetailView(product: product)) {
             HStack {

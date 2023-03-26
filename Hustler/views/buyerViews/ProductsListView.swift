@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProductsListView: View {
     @EnvironmentObject var dataSource:DataSoruce
+
     @State private var store: Store = Store()
     var body: some View {
         VStack{

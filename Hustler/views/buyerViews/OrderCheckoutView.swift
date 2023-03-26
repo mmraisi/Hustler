@@ -13,7 +13,9 @@ struct OrderCheckoutView: View {
     @State private var cName: String = ""
     @State private var cAddress: String = ""
     @State private var showingAlert = false
-    @EnvironmentObject var locationHelper:LocationHelper
+    private let locationHelper:LocationHelper = LocationHelper()
+    @State private var long: Double = 0.0
+    @State private var lat: Double = 0.0
     @Environment(\.dismiss) private var dismiss
     let product:Product
     var body: some View {
@@ -64,6 +66,20 @@ struct OrderCheckoutView: View {
             .padding(.bottom, 10)
             
         }.frame(height: 500)
+            .onAppear(){
+                //try to fetch weather using fetchWeatherInfo() function
+                print("Current loc \(self.locationHelper.currentLocation?.coordinate.longitude)")
+                self.lat = self.locationHelper.currentLocation?.coordinate.latitude ?? 0.0
+                self.long = self.locationHelper.currentLocation?.coordinate.longitude ?? 0.0
+                print("coordinates: \(lat) \(long)")
+            }
+            .onChange(of: self.locationHelper.currentLocation, perform: { _ in
+                print(#function, "current location changed : \(self.locationHelper.currentLocation)")
+                
+                self.lat = self.locationHelper.currentLocation?.coordinate.latitude ?? 0.0
+                self.long = self.locationHelper.currentLocation?.coordinate.longitude ?? 0.0
+                print("coordinates: \(lat) \(long)")
+            })
             .alert(isPresented: $showingAlert){
                 Alert(
                     title: Text("Error"),
@@ -78,8 +94,8 @@ struct OrderCheckoutView: View {
             showingAlert = true
             return
         }else{
-            let lat:Double = locationHelper.currentLocation?.coordinate.latitude ?? 0.0
-            let long:Double = locationHelper.currentLocation?.coordinate.longitude ?? 0.0
+            self.lat = locationHelper.currentLocation?.coordinate.latitude ?? 0.0
+            self.long = locationHelper.currentLocation?.coordinate.longitude ?? 0.0
             let customer = Customer(cName: cName, cEmail: (Auth.auth().currentUser?.email)!, cAddress: cAddress, cLong: long, cLat: lat)
             let order = Order(product: product, customer: customer, storeName: "North Face", isAccepted: true)
             dismiss()

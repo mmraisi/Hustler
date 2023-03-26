@@ -17,7 +17,7 @@ struct ContentView: View {
     
     @Binding var rootScreen :RootView
     @EnvironmentObject var dataSource: DataSoruce
-    @EnvironmentObject var locationHelper : LocationHelper
+
     
     var body: some View {
         VStack{
