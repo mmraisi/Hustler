@@ -14,7 +14,7 @@ struct OrderCheckoutView: View {
     @State private var cAddress: String = ""
     @State private var showingAlert = false
     private let locationHelper:LocationHelper = LocationHelper()
-    private let fireDBHelper : FireDBHelper = FireDBHelper(store: Firebase.Firestore.firestore())
+    @EnvironmentObject var fireDBHelper : FireDBHelper
     @State private var long: Double = 0.0
     @State private var lat: Double = 0.0
     @Environment(\.dismiss) private var dismiss
@@ -69,13 +69,13 @@ struct OrderCheckoutView: View {
         }.frame(height: 500)
             .onAppear(){
                 //try to fetch weather using fetchWeatherInfo() function
-                print("Current loc \(self.locationHelper.currentLocation?.coordinate.longitude)")
+                print("Current loc \(String(describing: self.locationHelper.currentLocation?.coordinate.longitude))")
                 self.lat = self.locationHelper.currentLocation?.coordinate.latitude ?? 0.0
                 self.long = self.locationHelper.currentLocation?.coordinate.longitude ?? 0.0
                 print("coordinates: \(lat) \(long)")
             }
             .onChange(of: self.locationHelper.currentLocation, perform: { _ in
-                print(#function, "current location changed : \(self.locationHelper.currentLocation)")
+                print(#function, "current location changed : \(String(describing: self.locationHelper.currentLocation))")
                 
                 self.lat = self.locationHelper.currentLocation?.coordinate.latitude ?? 0.0
                 self.long = self.locationHelper.currentLocation?.coordinate.longitude ?? 0.0

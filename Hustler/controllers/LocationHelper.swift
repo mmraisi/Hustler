@@ -67,8 +67,8 @@ class LocationHelper : NSObject, ObservableObject, CLLocationManagerDelegate{
             self.currentLocation = locations.first
             self.lastKnownLocation = locations.first
         }
-        print(#function, "location updated : \(self.currentLocation)")
-        print(#function, "Longitude : \(self.currentLocation?.coordinate.longitude)")
-        print(#function, "Latitude : \(self.currentLocation?.coordinate.latitude)")
+        print(#function, "location updated : \(String(describing: self.currentLocation))")
+        print(#function, "Longitude : \(String(describing: self.currentLocation?.coordinate.longitude))")
+        print(#function, "Latitude : \(String(describing: self.currentLocation?.coordinate.latitude))")
     }
 }

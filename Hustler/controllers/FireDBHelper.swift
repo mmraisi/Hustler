@@ -18,6 +18,9 @@ class FireDBHelper : ObservableObject{
     private let store : Firestore
     private static var shared : FireDBHelper?
     private let COLLECTION_ORDER : String = "Order"
+    private let FIELD_IS_ACCEPTED : String = "isAccepted"
+    private let FIELD_IS_CANCELED : String = "isCanceled"
+    var dataSource = DataSoruce()
     
     
     
@@ -49,178 +52,140 @@ class FireDBHelper : ObservableObject{
             }
         }
     }
-//
-    func getAllPendingOrder(){
-        self.store
-            .collection(COLLECTION_ORDER)
-            .whereField("isAccepted", isEqualTo: false)
-            .whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
-            .addSnapshotListener({ (querySnapshot, error) in
-                guard let snapshot = querySnapshot else{
-                    print(#function, "Unable to retrieve data from Firestore : \(error)")
-                    return
-                }
-
-                snapshot.documentChanges.forEach{ (docChange) in
-
-                    do{
-                        var order : Order = try docChange.document.data(as: Order.self)
-
-                        let docID = docChange.document.documentID
-                        order.id = docID
-
-                        let matchedIndex = self.pendingList.firstIndex(where: { ($0.id?.elementsEqual(docID))! })
-
-                        if docChange.type == .added{
-                            self.pendingList.append(order)
-                            print(#function, "Document added : \(order)")
-                        }
-
-                        if docChange.type == .removed{
-                            if (matchedIndex != nil){
-                                self.pendingList.remove(at: matchedIndex!)
-                            }
-                        }
-
-                        if docChange.type == .modified{
-                            if (matchedIndex != nil){
-                                self.pendingList[matchedIndex!] = order
-                            }
-                        }
-
-                    }catch let err as Error{
-                        print(#function, "Unable to convert the document into object : \(err)")
-                    }
-                }
-
-            })
-    }
-    func getAllCompletedOrder(){
-        self.store
-            .collection(COLLECTION_ORDER)
-            .whereField("isAccepted", isEqualTo: true)
-            .whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
-            .addSnapshotListener({ (querySnapshot, error) in
-                guard let snapshot = querySnapshot else{
-                    print(#function, "Unable to retrieve data from Firestore : \(error)")
-                    return
-                }
-
-                snapshot.documentChanges.forEach{ (docChange) in
-
-                    do{
-                        var order : Order = try docChange.document.data(as: Order.self)
-
-                        let docID = docChange.document.documentID
-                        order.id = docID
-
-                        let matchedIndex = self.completedList.firstIndex(where: { ($0.id?.elementsEqual(docID))! })
-
-                        if docChange.type == .added{
-                            self.completedList.append(order)
-                            print(#function, "Document added : \(order)")
-                        }
-
-                        if docChange.type == .removed{
-                            if (matchedIndex != nil){
-                                self.completedList.remove(at: matchedIndex!)
-                            }
-                        }
-
-                        if docChange.type == .modified{
-                            if (matchedIndex != nil){
-                                self.completedList[matchedIndex!] = order
-                            }
-                        }
-
-                    }catch let err as Error{
-                        print(#function, "Unable to convert the document into object : \(err)")
-                    }
-                }
-
-            })
-    }
-    func getAllCanceledOrder(){
-        self.store
-            .collection(COLLECTION_ORDER)
-            .whereField("isCanceled", isEqualTo: true)
-            .whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
-            .addSnapshotListener({ (querySnapshot, error) in
-                guard let snapshot = querySnapshot else{
-                    print(#function, "Unable to retrieve data from Firestore : \(error)")
-                    return
-                }
-
-                snapshot.documentChanges.forEach{ (docChange) in
-
-                    do{
-                        var order : Order = try docChange.document.data(as: Order.self)
-
-                        let docID = docChange.document.documentID
-                        order.id = docID
-
-                        let matchedIndex = self.canceledList.firstIndex(where: { ($0.id?.elementsEqual(docID))! })
-
-                        if docChange.type == .added{
-                            self.canceledList.append(order)
-                            print(#function, "Document added : \(order)")
-                        }
-
-                        if docChange.type == .removed{
-                            if (matchedIndex != nil){
-                                self.canceledList.remove(at: matchedIndex!)
-                            }
-                        }
-
-                        if docChange.type == .modified{
-                            if (matchedIndex != nil){
-                                self.canceledList[matchedIndex!] = order
-                            }
-                        }
-
-                    }catch let err as Error{
-                        print(#function, "Unable to convert the document into object : \(err)")
-                    }
-                }
-
-            })
-    }
-//
-//    func deleteBook(bookToDelete : Book){
-//
-//        self.store
-//            .collection(COLLECTION_LIBRARY)
-//            .document(loggedInUserEmail)
-//            .collection(COLLECTION_BOOKS)
-//            .document(bookToDelete.id!)
-//            .delete{error in
-//
-//                if let error = error {
-//                    print(#function, "Unable to delete document : \(error)")
-//                }else{
-//                    print(#function, "Successfully deleted \(bookToDelete.bTitle) book from the firestore")
-//                }
-//
-//            }
-//    }
-//
-//    func updateBook(bookToUpdate : Book){
-//        self.store
-//            .collection(COLLECTION_LIBRARY)
-//            .document(loggedInUserEmail)
-//            .collection(COLLECTION_BOOKS)
-//            .document(bookToUpdate.id!)
-//            .updateData([FIELD_TITLE : bookToUpdate.bTitle,
-//                        FIELD_AUTHOR : bookToUpdate.bAuthor,
-//                       FIELD_FICTION : bookToUpdate.bIsFiction]){error in
-//
-//                if let error = error {
-//                    print(#function, "Unable to update document : \(error)")
-//                }else{
-//                    print(#function, "Successfully updated \(bookToUpdate.bTitle) book in the firestore")
-//                }
-//            }
-//    }
     
+    func getAllPendingOrder(completion: @escaping ([Order]?, Error?) -> Void) {
+//        self.pendingList = [Order]()
+        var query = self.store.collection(COLLECTION_ORDER).whereField("isAccepted", isEqualTo: false).whereField("isCanceled", isEqualTo: false)
+            
+        if (dataSource.currentUserType == .BUYER) {
+            query = query.whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
+        }
+            
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print(#function, "Unable to retrieve data from Firestore : \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            var orders: [Order] = []
+            
+            querySnapshot?.documents.forEach { document in
+                do {
+                    var order: Order = try document.data(as: Order.self)
+                    order.id = document.documentID
+                    
+                    orders.append(order)
+                } catch let error {
+                    print(#function, "Unable to convert the document into object : \(error)")
+                }
+            }
+            
+            completion(orders, nil)
+        }
+    }
+
+    
+    func getAllCompletedOrder(completion: @escaping ([Order]?, Error?) -> Void) {
+//        self.completedList = [Order]()
+        var query = self.store.collection(COLLECTION_ORDER).whereField("isAccepted", isEqualTo: true)
+            
+        if (dataSource.currentUserType == .BUYER) {
+            query = query.whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
+        }
+            
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print(#function, "Unable to retrieve data from Firestore : \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            var orders: [Order] = []
+            
+            querySnapshot?.documents.forEach { document in
+                do {
+                    var order: Order = try document.data(as: Order.self)
+                    order.id = document.documentID
+                    
+                    orders.append(order)
+                } catch let error {
+                    print(#function, "Unable to convert the document into object : \(error)")
+                }
+            }
+            
+            completion(orders, nil)
+        }
+    }
+    
+    func getAllCanceledOrder(completion: @escaping ([Order]?, Error?) -> Void) {
+//        self.canceledList = [Order]()
+        var query = self.store.collection(COLLECTION_ORDER).whereField("isCanceled", isEqualTo: true)
+            
+        if (dataSource.currentUserType == .BUYER) {
+            query = query.whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
+        }
+            
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print(#function, "Unable to retrieve data from Firestore : \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            var orders: [Order] = []
+            
+            querySnapshot?.documents.forEach { document in
+                do {
+                    var order: Order = try document.data(as: Order.self)
+                    order.id = document.documentID
+                    
+                    orders.append(order)
+                } catch let error {
+                    print(#function, "Unable to convert the document into object : \(error)")
+                }
+            }
+            
+            completion(orders, nil)
+        }
+    }
+    
+
+    func updateOrder(orderToUpdate: Order, completion: @escaping (Error?) -> Void) {
+        self.store
+            .collection(COLLECTION_ORDER)
+            .document(orderToUpdate.id!)
+            .updateData([
+                FIELD_IS_ACCEPTED : orderToUpdate.isAccepted,
+                FIELD_IS_CANCELED : orderToUpdate.isCanceled
+            ]) { error in
+                if let error = error {
+                    print(#function, "Unable to update document : \(error)")
+                } else {
+                    print(#function, "Successfully updated \(orderToUpdate.customer.cName)'s order in the firestore")
+                }
+                completion(error)
+            }
+    }
+    
+    //
+    //    func deleteBook(bookToDelete : Book){
+    //
+    //        self.store
+    //            .collection(COLLECTION_LIBRARY)
+    //            .document(loggedInUserEmail)
+    //            .collection(COLLECTION_BOOKS)
+    //            .document(bookToDelete.id!)
+    //            .delete{error in
+    //
+    //                if let error = error {
+    //                    print(#function, "Unable to delete document : \(error)")
+    //                }else{
+    //                    print(#function, "Successfully deleted \(bookToDelete.bTitle) book from the firestore")
+    //                }
+    //
+    //            }
+    //    }
+    //
 }
 

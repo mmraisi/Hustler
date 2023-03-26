@@ -9,14 +9,16 @@ import SwiftUI
 
 struct ProductsListView: View {
     @EnvironmentObject var dataSource:DataSoruce
-
+    @EnvironmentObject var fireDBHelper : FireDBHelper
     @State private var store: Store = Store()
     var body: some View {
         VStack{
             Section(header: Text(store.name).font(.headline)){
                 List{
                     ForEach(dataSource.store.productsList){ product in
-                        ProductItem(product: product)
+                        NavigationLink(destination: ProductDetailView(product: product).environmentObject(fireDBHelper)) {
+                            ProductItem(product: product)
+                        }
                     }
                 }
                 .background(Color.blue)

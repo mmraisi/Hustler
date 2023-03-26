@@ -14,20 +14,21 @@ import Firebase
 //or will have one view for the hustler (OrdersListView-> OrddeDetialView)
 
 struct ContentView: View {
+    @EnvironmentObject var dataSource: DataSoruce
+    @EnvironmentObject var fireDBHelper : FireDBHelper
     
     @Binding var rootScreen :RootView
-    @EnvironmentObject var dataSource: DataSoruce
 
     
     var body: some View {
         VStack{
             TabView {
-                ProductsListView()
+                ProductsListView().environmentObject(fireDBHelper)
                     .tabItem {
                         Label("Products", systemImage: "list.dash")
                     }
                 
-                OrdersHistoryView()
+                OrdersHistoryView().environmentObject(fireDBHelper)
                     .tabItem {
                         Label("Order History", systemImage: "clock")
                     }
@@ -39,15 +40,9 @@ struct ContentView: View {
                                     .font(.headline)
                 
             },trailing: HStack{
-//                Button(action: {
-//
-//                }){
-//                    Image(systemName: "cart")
-//                        .foregroundColor(Color.black)
-//                }
                 
                 Button(action: {
-                    
+                    rootScreen = .Login
                 }){
                     Image(systemName: "rectangle.portrait.and.arrow.right")
                         .foregroundColor(Color.black)

@@ -12,6 +12,7 @@ struct ProductDetailView: View {
     let product:Product
     @State private var showCartSheet = false
     @EnvironmentObject var dataSource: DataSoruce
+    @EnvironmentObject var fireDBHelper : FireDBHelper
     var body: some View {
         VStack{
             HStack(spacing:10){
@@ -49,7 +50,7 @@ struct ProductDetailView: View {
             .padding(.horizontal)
             .padding(.bottom, 10)
             .sheet(isPresented: $showCartSheet){
-                OrderCheckoutView(product: product)
+                OrderCheckoutView(product: product).environmentObject(fireDBHelper)
             }
         }.frame(height: 500)
     }

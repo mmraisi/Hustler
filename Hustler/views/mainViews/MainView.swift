@@ -15,8 +15,9 @@ import FirebaseAuth
 // based on the user selection, the user will be redirected to the Login view
 
 struct MainView: View {
-    var dataSource : DataSoruce = DataSoruce()
+    let dataSource : DataSoruce = DataSoruce()
     private let fireAuthHelper = FireAuthHelper()
+    private let fireDBHelper : FireDBHelper = FireDBHelper(store: Firestore.firestore())
     
     
     @State private var root : RootView = .Login
@@ -28,9 +29,9 @@ struct MainView: View {
             case .Login:
                 SignInView(rootScreen : $root).environmentObject(dataSource).environmentObject(fireAuthHelper)
             case .BUYER_HOME:
-                ContentView(rootScreen : $root).environmentObject(dataSource)
+                ContentView(rootScreen : $root).environmentObject(dataSource).environmentObject(fireDBHelper)
             case .HUSTLER_HOME:
-                OrdersListView().environmentObject(dataSource)
+                OrdersListView(rootScreen : $root).environmentObject(dataSource).environmentObject(fireDBHelper)
             }
         }//NavigationView
         .navigationViewStyle(StackNavigationViewStyle())
