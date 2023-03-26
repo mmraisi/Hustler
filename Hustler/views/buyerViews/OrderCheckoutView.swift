@@ -14,6 +14,7 @@ struct OrderCheckoutView: View {
     @State private var cAddress: String = ""
     @State private var showingAlert = false
     private let locationHelper:LocationHelper = LocationHelper()
+    private let fireDBHelper : FireDBHelper = FireDBHelper(store: Firebase.Firestore.firestore())
     @State private var long: Double = 0.0
     @State private var lat: Double = 0.0
     @Environment(\.dismiss) private var dismiss
@@ -97,7 +98,9 @@ struct OrderCheckoutView: View {
             self.lat = locationHelper.currentLocation?.coordinate.latitude ?? 0.0
             self.long = locationHelper.currentLocation?.coordinate.longitude ?? 0.0
             let customer = Customer(cName: cName, cEmail: (Auth.auth().currentUser?.email)!, cAddress: cAddress, cLong: long, cLat: lat)
-            let order = Order(product: product, customer: customer, storeName: "North Face", isAccepted: true)
+            let order = Order(product: product, customer: customer, storeName: "North Face", isAccepted: false,isCanceled: false)
+            //push the order to DB
+            fireDBHelper.insertOrder(order: order)
             dismiss()
         }
     }

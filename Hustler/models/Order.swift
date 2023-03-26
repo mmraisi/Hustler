@@ -11,23 +11,26 @@ import FirebaseFirestoreSwift
 // this struct will be used for the buyer to check their orders,
 //and for the hustlers to see the list of orders at their end
 
-struct Order: Identifiable, Codable {
+struct Order: Identifiable, Codable{
+    
     @DocumentID var id : String? = UUID().uuidString
     var product : Product = Product()
     var customer : Customer = Customer()
     var storeName : String = ""
     var isAccepted: Bool = false
+    var isCanceled: Bool = false
     
     init(){
         
     }
     
-    init(id: String? = nil, product: Product, customer: Customer, storeName: String, isAccepted: Bool) {
+    init(id: String? = nil, product: Product, customer: Customer, storeName: String, isAccepted: Bool,isCanceled: Bool) {
         self.id = id
         self.product = product
         self.customer = customer
         self.storeName = storeName
         self.isAccepted = isAccepted
+        self.isCanceled = isCanceled
     }
     
     init(from decoder: Decoder) throws {
@@ -37,5 +40,6 @@ struct Order: Identifiable, Codable {
         self.customer = try container.decode(Customer.self, forKey: .customer)
         self.storeName = try container.decode(String.self, forKey: .storeName)
         self.isAccepted = try container.decode(Bool.self, forKey: .isAccepted)
+        self.isCanceled = try container.decode(Bool.self, forKey: .isCanceled)
     }
 }
