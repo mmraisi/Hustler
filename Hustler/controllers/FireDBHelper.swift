@@ -49,71 +49,6 @@ class FireDBHelper : ObservableObject{
         }
     }
     
-    func getAllPendingOrder(completion: @escaping ([Order]?, Error?) -> Void) {
-//        self.pendingList = [Order]()
-        var query = self.store.collection(COLLECTION_ORDER).whereField("isAccepted", isEqualTo: false).whereField("isCanceled", isEqualTo: false)
-            
-        if (dataSource.currentUserType == .BUYER) {
-            query = query.whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
-        }
-            
-        query.getDocuments { (querySnapshot, error) in
-            if let error = error {
-                print(#function, "Unable to retrieve data from Firestore : \(error)")
-                completion(nil, error)
-                return
-            }
-            
-            var orders: [Order] = []
-            
-            querySnapshot?.documents.forEach { document in
-                do {
-                    var order: Order = try document.data(as: Order.self)
-                    order.id = document.documentID
-                    
-                    orders.append(order)
-                } catch let error {
-                    print(#function, "Unable to convert the document into object : \(error)")
-                }
-            }
-            print("pending orders: \(orders.count)")
-            
-            completion(orders, nil)
-        }
-    }
-
-    
-    func getAllCompletedOrder(completion: @escaping ([Order]?, Error?) -> Void) {
-//        self.completedList = [Order]()
-        var query = self.store.collection(COLLECTION_ORDER).whereField("isAccepted", isEqualTo: true)
-            
-        if (dataSource.currentUserType == .BUYER) {
-            query = query.whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
-        }
-            
-        query.getDocuments { (querySnapshot, error) in
-            if let error = error {
-                print(#function, "Unable to retrieve data from Firestore : \(error)")
-                completion(nil, error)
-                return
-            }
-            
-            var orders: [Order] = []
-            
-            querySnapshot?.documents.forEach { document in
-                do {
-                    var order: Order = try document.data(as: Order.self)
-                    order.id = document.documentID
-                    
-                    orders.append(order)
-                } catch let error {
-                    print(#function, "Unable to convert the document into object : \(error)")
-                }
-            }
-            print("completed orders: \(orders.count)")
-            completion(orders, nil)
-        }
-    }
     
     func getAllOrders(completion: @escaping ([Order]?, Error?) -> Void) {
             
@@ -140,39 +75,6 @@ class FireDBHelper : ObservableObject{
             completion(orders, nil)
         }
     }
-    
-    func getAllCanceledOrder(completion: @escaping ([Order]?, Error?) -> Void) {
-//        self.canceledList = [Order]()
-        var query = self.store.collection(COLLECTION_ORDER).whereField("isCanceled", isEqualTo: true)
-            
-        if (dataSource.currentUserType == .BUYER) {
-            query = query.whereField("customer.cEmail", isEqualTo: loggedInUserEmail)
-        }
-            
-        query.getDocuments { (querySnapshot, error) in
-            if let error = error {
-                print(#function, "Unable to retrieve data from Firestore : \(error)")
-                completion(nil, error)
-                return
-            }
-            
-            var orders: [Order] = []
-            
-            querySnapshot?.documents.forEach { document in
-                do {
-                    var order: Order = try document.data(as: Order.self)
-                    order.id = document.documentID
-                    
-                    orders.append(order)
-                } catch let error {
-                    print(#function, "Unable to convert the document into object : \(error)")
-                }
-            }
-            print("canceled orders: \(orders.count)")
-            completion(orders, nil)
-        }
-    }
-    
 
     func updateOrder(orderToUpdate: Order, completion: @escaping (Error?) -> Void) {
         self.store
