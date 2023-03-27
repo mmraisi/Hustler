@@ -40,39 +40,19 @@ struct OrdersHistoryView: View {
                     
                 }
             }.onAppear(perform: {
-//                reset()
-                self.fireDBHelper.getAllPendingOrder { (orders, error) in
-                    if error != nil {
-                        // handle error
+                reset()
+                self.fireDBHelper.getAllOrders { (orders, error) in
+                    if let error = error {
+                        print("Failed to retrieve pending orders: \(error)")
                         return
                     }
                     
                     // use the array of orders
-                    print("Retrieved \(orders?.count ?? 0) pending orders")
-                    self.fireDBHelper.pendingList = orders ?? [Order]()
+                    print("Retrieved \(orders?.count ?? 0) orders")
+                    self.fireDBHelper.pendingList = (orders ?? [Order]()).filter { !$0.isCanceled && !$0.isAccepted && $0.customer.cEmail == Auth.auth().currentUser?.email}
+                    self.fireDBHelper.completedList = (orders ?? [Order]()).filter { !$0.isCanceled && $0.isAccepted && $0.customer.cEmail == Auth.auth().currentUser?.email}
+                    self.fireDBHelper.canceledList = (orders ?? [Order]()).filter { $0.isCanceled && !$0.isAccepted && $0.customer.cEmail == Auth.auth().currentUser?.email}
                 }
-                self.fireDBHelper.getAllCanceledOrder { (orders, error) in
-                    if error != nil {
-                        // handle error
-                        return
-                    }
-                    
-                    // use the array of orders
-                    print("Retrieved \(orders?.count ?? 0) canceled orders")
-                    self.fireDBHelper.canceledList = orders ?? [Order]()
-                }
-                
-                self.fireDBHelper.getAllCompletedOrder { (orders, error) in
-                    if error != nil {
-                        // handle error
-                        return
-                    }
-                    
-                    // use the array of orders
-                    print("Retrieved \(orders?.count ?? 0) completed orders")
-                    self.fireDBHelper.completedList = orders ?? [Order]()
-                }
-                
             })
             
         }

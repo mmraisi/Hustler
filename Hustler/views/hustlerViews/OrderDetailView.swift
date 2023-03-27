@@ -30,44 +30,86 @@ struct OrderDetailView: View {
                 .padding(.horizontal)
                 VStack{
                     Text("\(order.product.pName)").font(.title)
+                    if let orderId = order.id {
+                        let truncatedId = String(orderId.prefix(8))
+                        Text("Ref: \(truncatedId)").font(.caption)
+                    }
                     Text("\(order.product.pDesc)").font(.caption)
                     Text("$\(order.product.pPrice,specifier: "%.2f")").font(.caption)
+                    Section(header:Text("Customer Info")){
+                        Text("Name: \(order.customer.cName)").font(.caption)
+                        Text("Address: \(order.customer.cAddress)").font(.caption)
+                        Text("Email: \(order.customer.cEmail)").font(.caption)
+                    }
                     Spacer()
                 }.padding(.horizontal)
             }
             .frame(height: 300)
             
             HStack{
-                Button(action: {
-                    confirmOrder()
-                    presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    Text("Confirm Order")
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                })
-                .padding(.horizontal)
-                .padding(.bottom, 10)
-                
-                
-                Button(action: {
-                    cancelOrder()
-                    presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    Text("Cancel Order")
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                })
-                .padding(.horizontal)
-                .padding(.bottom, 10)
+                if(order.isAccepted){
+                    Button(action: {
+                        cancelOrder()
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Cancel Order")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    })
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
+                }
+                else if (order.isCanceled){
+                    Button(action: {
+                        confirmOrder()
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Confirm Order")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    })
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
+                }
+                else{
+                    Button(action: {
+                        confirmOrder()
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Confirm Order")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    })
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
+                    
+                    Button(action: {
+                        cancelOrder()
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Cancel Order")
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    })
+                    .padding(.horizontal)
+                    .padding(.bottom, 10)
+                }
             }
             
             

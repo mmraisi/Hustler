@@ -1,9 +1,6 @@
 //
 //  LocationHelper.swift
-//  WeatherApp
-//
-//  Created by Tech on 2023-03-22.
-//
+
 
 import Foundation
 import CoreLocation

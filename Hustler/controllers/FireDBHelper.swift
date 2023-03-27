@@ -1,9 +1,5 @@
 //
 //  FireDBHelper.swift
-//  FirestoreDemo
-//
-//  Created by Tech on 2023-03-14.
-//
 
 import Foundation
 import FirebaseFirestore
@@ -80,6 +76,7 @@ class FireDBHelper : ObservableObject{
                     print(#function, "Unable to convert the document into object : \(error)")
                 }
             }
+            print("pending orders: \(orders.count)")
             
             completion(orders, nil)
         }
@@ -113,7 +110,33 @@ class FireDBHelper : ObservableObject{
                     print(#function, "Unable to convert the document into object : \(error)")
                 }
             }
+            print("completed orders: \(orders.count)")
+            completion(orders, nil)
+        }
+    }
+    
+    func getAllOrders(completion: @escaping ([Order]?, Error?) -> Void) {
             
+        self.store.collection(COLLECTION_ORDER).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print(#function, "Unable to retrieve data from Firestore : \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            var orders: [Order] = []
+            
+            querySnapshot?.documents.forEach { document in
+                do {
+                    var order: Order = try document.data(as: Order.self)
+                    order.id = document.documentID
+                    
+                    orders.append(order)
+                } catch let error {
+                    print(#function, "Unable to convert the document into object : \(error)")
+                }
+            }
+            print("orders: \(orders.count)")
             completion(orders, nil)
         }
     }
@@ -145,7 +168,7 @@ class FireDBHelper : ObservableObject{
                     print(#function, "Unable to convert the document into object : \(error)")
                 }
             }
-            
+            print("canceled orders: \(orders.count)")
             completion(orders, nil)
         }
     }
