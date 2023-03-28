@@ -50,9 +50,8 @@ class FireDBHelper : ObservableObject{
     }
     
     
-    func getAllOrders(completion: @escaping ([Order]?, Error?) -> Void) {
-            
-        self.store.collection(COLLECTION_ORDER).getDocuments { (querySnapshot, error) in
+    func getAllOrders(completion: @escaping ([Order]?, Error?) -> Void) -> ListenerRegistration? {
+        let listener = self.store.collection(COLLECTION_ORDER).addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 print(#function, "Unable to retrieve data from Firestore : \(error)")
                 completion(nil, error)
@@ -74,6 +73,8 @@ class FireDBHelper : ObservableObject{
             print("orders: \(orders.count)")
             completion(orders, nil)
         }
+        
+        return listener
     }
 
     func updateOrder(orderToUpdate: Order, completion: @escaping (Error?) -> Void) {

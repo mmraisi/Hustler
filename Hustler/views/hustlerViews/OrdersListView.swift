@@ -12,6 +12,7 @@ struct OrdersListView: View {
     @EnvironmentObject var dataSource: DataSoruce
     @EnvironmentObject var fireDBHelper : FireDBHelper
     @Binding var rootScreen :RootView
+    @State private var showNewOrderAlert = false
     
     var body: some View {
         VStack{
@@ -20,7 +21,7 @@ struct OrdersListView: View {
                     ForEach(self.fireDBHelper.pendingList,id: \.id){order in
                             VStack(alignment: .leading){
                                 NavigationLink(destination: OrderDetailView(order: order).environmentObject(fireDBHelper)) {
-                                    ProductItem(product: order.product)
+                                    OrderItemView(order: order)
                                 }
                             }//VStack
                     }
@@ -30,7 +31,7 @@ struct OrdersListView: View {
                     ForEach(self.fireDBHelper.completedList,id: \.id){order in
                             VStack(alignment: .leading){
                                 NavigationLink(destination: OrderDetailView(order: order).environmentObject(fireDBHelper)) {
-                                    ProductItem(product: order.product)
+                                    OrderItemView(order: order)
                                 }
                             }//VStack
                     }
@@ -40,29 +41,38 @@ struct OrdersListView: View {
                     ForEach(self.fireDBHelper.canceledList,id: \.id){order in
                             VStack(alignment: .leading){
                                 NavigationLink(destination: OrderDetailView(order: order).environmentObject(fireDBHelper)) {
-                                    ProductItem(product: order.product)
+                                    OrderItemView(order: order)
                                 }
                             }//VStack
                     }
                     
                 }
+                .alert(isPresented: $showNewOrderAlert) {
+                           Alert(
+                               title: Text("New Order Added"),
+                               message: Text("A new order has been added."),
+                               dismissButton: .default(Text("OK"))
+                           )
+                       }
             }.onAppear(perform: {
                 reset()
+                
                 self.fireDBHelper.getAllOrders { (orders, error) in
-                    if let error = error {
-                        print("Failed to retrieve pending orders: \(error)")
-                        return
+                    if error != nil {
+                        // Handle the error
+                    } else if let orders = orders {
+                        self.fireDBHelper.pendingList = (orders ).filter { !$0.isCanceled && !$0.isAccepted }
+                        self.fireDBHelper.completedList = (orders ).filter { !$0.isCanceled && $0.isAccepted }
+                        self.fireDBHelper.canceledList = (orders ).filter { $0.isCanceled && !$0.isAccepted }
                     }
-                    
-                    // use the array of orders
-                    print("Retrieved \(orders?.count ?? 0) orders")
-                    self.fireDBHelper.pendingList = (orders ?? [Order]()).filter { !$0.isCanceled && !$0.isAccepted }
-                    self.fireDBHelper.completedList = (orders ?? [Order]()).filter { !$0.isCanceled && $0.isAccepted }
-                    self.fireDBHelper.canceledList = (orders ?? [Order]()).filter { $0.isCanceled && !$0.isAccepted }
                 }
             })
-
-            
+            .onReceive(self.fireDBHelper.$pendingList) { newItems in
+                if ((newItems.count > self.fireDBHelper.pendingList.count)  && (self.fireDBHelper.pendingList.count != 0)){
+                    print("New item added: \(newItems.last!)")
+                    showNewOrderAlert = true
+                }
+            }
         }
         .navigationTitle("Hustler")
         .navigationBarItems(leading: HStack {
