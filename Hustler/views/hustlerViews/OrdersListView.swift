@@ -13,40 +13,42 @@ struct OrdersListView: View {
     @EnvironmentObject var fireDBHelper : FireDBHelper
     @Binding var rootScreen :RootView
     @State private var showNewOrderAlert = false
+    @State private var showPending:Bool = false
+    @State private var showCompleted:Bool = false
+    @State private var showCanceled:Bool = false
     
     var body: some View {
         VStack{
             List {
-                Section(header: Text("Pending")) {
+                DisclosureGroup("Pending Orders :\(self.fireDBHelper.pendingList.count)", isExpanded: $showPending,content:{
                     ForEach(self.fireDBHelper.pendingList,id: \.id){order in
                             VStack(alignment: .leading){
                                 NavigationLink(destination: OrderDetailView(order: order).environmentObject(fireDBHelper)) {
                                     OrderItemView(order: order)
                                 }
-                            }//VStack
+                            }
                     }
-                }
-                
-                Section(header: Text("Completed")) {
+                }).tint(Color.orange)
+                    
+                DisclosureGroup("Completed Orders : \(self.fireDBHelper.completedList.count)", isExpanded: $showCompleted,content:{
                     ForEach(self.fireDBHelper.completedList,id: \.id){order in
                             VStack(alignment: .leading){
                                 NavigationLink(destination: OrderDetailView(order: order).environmentObject(fireDBHelper)) {
                                     OrderItemView(order: order)
                                 }
-                            }//VStack
+                            }
                     }
-                }
-                
-                Section(header: Text("Canceled")) {
+                }).tint(Color.orange)
+
+                DisclosureGroup("Canceled Orders : \(self.fireDBHelper.canceledList.count)", isExpanded: $showCanceled,content:{
                     ForEach(self.fireDBHelper.canceledList,id: \.id){order in
                             VStack(alignment: .leading){
                                 NavigationLink(destination: OrderDetailView(order: order).environmentObject(fireDBHelper)) {
                                     OrderItemView(order: order)
                                 }
-                            }//VStack
+                            }
                     }
-                    
-                }
+                }).tint(Color.orange)
                 .alert(isPresented: $showNewOrderAlert) {
                            Alert(
                                title: Text("New Order Added"),
@@ -77,8 +79,10 @@ struct OrdersListView: View {
         .navigationTitle("Hustler")
         .navigationBarItems(leading: HStack {
             Image(systemName: "person.circle.fill")
+                .foregroundColor(Color.orange)
             Text((Auth.auth().currentUser?.email)!)
                                 .font(.headline)
+                                .foregroundColor(Color.orange)
             
         },trailing: HStack{
             
@@ -86,7 +90,7 @@ struct OrdersListView: View {
                 rootScreen = .Login
             }){
                 Image(systemName: "rectangle.portrait.and.arrow.right")
-                    .foregroundColor(Color.black)
+                    .foregroundColor(Color.orange)
             }
         })
     }
@@ -98,9 +102,3 @@ struct OrdersListView: View {
     
     
 }
-
-//struct OrdersListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        OrdersListView()
-//    }
-//}

@@ -28,23 +28,23 @@ struct ProductDetailView: View {
                 .padding(.horizontal)
                 VStack{
                     Text("\(product.pName)").font(.title)
+                    Text("").padding(.horizontal,10)
                     Text("\(product.pDesc)").font(.caption)
-                    Text("$\(product.pPrice,specifier: "%.2f")").font(.caption)
                     Spacer()
                 }.padding(.horizontal)
             }
             .frame(height: 300)
-            
-            
+            Text("$\(product.pPrice,specifier: "%.2f")").font(.title2)
+            Spacer()
             Button(action: {
                 showCartSheet.toggle()
             }, label: {
                 Text("Confirm Order")
                     .foregroundColor(.white)
                     .font(.headline)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: 200)
                     .padding()
-                    .background(Color.blue)
+                    .background(Color.orange)
                     .cornerRadius(10)
             })
             .padding(.horizontal)

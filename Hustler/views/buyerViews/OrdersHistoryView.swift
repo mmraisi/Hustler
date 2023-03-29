@@ -40,7 +40,7 @@ struct OrdersHistoryView: View {
                     
                 }
             }.onAppear(perform: {
-                reset()
+                self.fireDBHelper.reset()
                 self.fireDBHelper.getAllOrders { (orders, error) in
                     if let error = error {
                         print("Failed to retrieve pending orders: \(error)")
@@ -56,11 +56,6 @@ struct OrdersHistoryView: View {
             })
             
         }
-    }
-    func reset(){
-        self.fireDBHelper.pendingList = [Order]()
-        self.fireDBHelper.completedList = [Order]()
-        self.fireDBHelper.canceledList = [Order]()
     }
 }
 

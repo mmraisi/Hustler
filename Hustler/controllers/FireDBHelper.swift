@@ -93,6 +93,11 @@ class FireDBHelper : ObservableObject{
                 completion(error)
             }
     }
+    func reset(){
+        self.pendingList = [Order]()
+        self.completedList = [Order]()
+        self.canceledList = [Order]()
+    }
     
     //
     //    func deleteBook(bookToDelete : Book){

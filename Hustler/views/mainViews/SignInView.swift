@@ -24,8 +24,13 @@ struct SignInView: View {
     @EnvironmentObject var fireAuthHelper: FireAuthHelper
     
     var body: some View {
+        
             VStack {
                 Spacer()
+                Image("Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200,height: 200)
                 Text("Sign In")
                     .font(.largeTitle)
                     .bold()
@@ -57,9 +62,9 @@ struct SignInView: View {
                     Text("Sign In")
                         .foregroundColor(.white)
                         .font(.headline)
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: 100)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.orange)
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)
@@ -69,7 +74,8 @@ struct SignInView: View {
                     Text("Don't have an account? Sign up.")
                         .foregroundColor(.blue)
                         .padding(.top, 20)
-                }
+                }.toolbar(.hidden)
+
                 Spacer()
             }
             .alert(isPresented: $showingAlert) {

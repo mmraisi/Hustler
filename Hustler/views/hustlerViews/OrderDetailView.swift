@@ -17,34 +17,37 @@ struct OrderDetailView: View {
 
     var body: some View {
         VStack{
+            
+            Text("Order Details").font(.title).foregroundColor(Color.orange).frame(alignment: .center)
             HStack(spacing:10){
                 VStack{
                     URLImage(URL(string: order.product.pImageURI)!) { image in
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                    }
-                    Spacer()
+                            .frame(width: 75, height: 75)
+                    }.frame(alignment: .center)
                 }
                 .padding(.horizontal)
-                VStack{
-                    Text("\(order.product.pName)").font(.title)
-                    if let orderId = order.id {
-                        let truncatedId = String(orderId.prefix(8))
-                        Text("Ref: \(truncatedId)").font(.caption)
+                
+                Form{
+                    Section(header: Text("Product Information")){
+                        Text("Name: \(order.product.pName)").font(.caption)
+                        if let orderId = order.id {
+                            let truncatedId = String(orderId.prefix(8))
+                            Text("Ref: \(truncatedId)").font(.caption)
+                        }
+                        Text("Price: $\(order.product.pPrice,specifier: "%.2f")").font(.caption)
                     }
-                    Text("\(order.product.pDesc)").font(.caption)
-                    Text("$\(order.product.pPrice,specifier: "%.2f")").font(.caption)
                     Section(header:Text("Customer Info")){
                         Text("Name: \(order.customer.cName)").font(.caption)
                         Text("Address: \(order.customer.cAddress)").font(.caption)
                         Text("Email: \(order.customer.cEmail)").font(.caption)
                     }
-                    Spacer()
-                }.padding(.horizontal)
+                }
+                Spacer()
             }
-            .frame(height: 300)
+            .frame(height: 400)
             
             HStack{
                 if(order.isAccepted){
@@ -57,7 +60,7 @@ struct OrderDetailView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color.orange)
                             .cornerRadius(10)
                     })
                     .padding(.horizontal)
@@ -73,7 +76,7 @@ struct OrderDetailView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color.orange)
                             .cornerRadius(10)
                     })
                     .padding(.horizontal)
@@ -89,7 +92,7 @@ struct OrderDetailView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color.orange)
                             .cornerRadius(10)
                     })
                     .padding(.horizontal)
@@ -104,7 +107,7 @@ struct OrderDetailView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color.orange)
                             .cornerRadius(10)
                     })
                     .padding(.horizontal)

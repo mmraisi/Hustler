@@ -18,7 +18,7 @@ struct ProductItem : View {
                 Text(product.pName)
                     .font(.system(size: 14))
                     .fontWeight(.medium)
-                    .foregroundColor(.primary)
+                    .foregroundColor(Color.orange)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text("Price: $\(String(format: "%.2f", product.pPrice))")
                     .font(.subheadline)

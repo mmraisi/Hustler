@@ -28,6 +28,10 @@ struct SignUpView: View {
     var body: some View {
             VStack {
                 Spacer()
+                Image("Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200,height: 200)
                 Text("Sign Up")
                     .font(.largeTitle)
                     .bold()
@@ -88,9 +92,9 @@ struct SignUpView: View {
                     Text("Sign Up")
                         .foregroundColor(.white)
                         .font(.headline)
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: 100)
                         .padding()
-                        .background(Color.blue)
+                        .background(Color.orange)
                         .cornerRadius(10)
                 })
                 .padding(.horizontal)
@@ -105,6 +109,7 @@ struct SignUpView: View {
                             .foregroundColor(.blue)
                             .fontWeight(.semibold)
                     })
+                    
                 }
                 .padding(.horizontal)
                 

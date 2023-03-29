@@ -31,27 +31,43 @@ struct ContentView: View {
                 OrdersHistoryView().environmentObject(fireDBHelper)
                     .tabItem {
                         Label("Order History", systemImage: "clock")
-                    }
+                    }.badge(fireDBHelper.pendingList.count)
             }
+            .onAppear(perform: {
+                self.fireDBHelper.reset()
+                self.fireDBHelper.getAllOrders { (orders, error) in
+                    if let error = error {
+                        print("Failed to retrieve pending orders: \(error)")
+                        return
+                    }
+                    
+                    // use the array of orders
+                    print("Retrieved \(orders?.count ?? 0) orders")
+                    self.fireDBHelper.pendingList = (orders ?? [Order]()).filter { !$0.isCanceled && !$0.isAccepted && $0.customer.cEmail == Auth.auth().currentUser?.email}
+                    self.fireDBHelper.completedList = (orders ?? [Order]()).filter { !$0.isCanceled && $0.isAccepted && $0.customer.cEmail == Auth.auth().currentUser?.email}
+                    self.fireDBHelper.canceledList = (orders ?? [Order]()).filter { $0.isCanceled && !$0.isAccepted && $0.customer.cEmail == Auth.auth().currentUser?.email}
+                }
+            })
+            .accentColor(Color.orange)
             .navigationTitle("Hustler")
             .navigationBarItems(leading: HStack {
-                Image(systemName: "person.circle.fill")
+                Image(systemName: "person.circle.fill").foregroundColor(Color.orange)
                 Text((Auth.auth().currentUser?.email)!)
                                     .font(.headline)
+                                    .foregroundColor(Color.orange)
                 
-            },trailing: HStack{
-                
+            },
+            trailing: HStack{
                 Button(action: {
                     rootScreen = .Login
                 }){
                     Image(systemName: "rectangle.portrait.and.arrow.right")
-                        .foregroundColor(Color.black)
+                        .foregroundColor(Color.orange)
                 }
             })
         }
     }
 }
-
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ContentView()

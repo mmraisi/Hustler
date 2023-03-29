@@ -23,7 +23,6 @@ struct MainView: View {
     @State private var root : RootView = .Login
     
     var body: some View {
-        
         NavigationView{
             switch root{
             case .Login:

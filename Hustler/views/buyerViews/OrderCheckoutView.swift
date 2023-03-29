@@ -21,7 +21,7 @@ struct OrderCheckoutView: View {
     let product:Product
     var body: some View {
         VStack{
-            Text("Confirm Order").font(.headline).frame(alignment: .center)
+            Text("Confirm Order").font(.headline).frame(alignment: .center).foregroundColor(Color.orange)
             HStack(spacing:10){
                 VStack{
                     URLImage(URL(string: product.pImageURI)!) { image in
@@ -35,11 +35,13 @@ struct OrderCheckoutView: View {
                 .padding(.horizontal)
                 VStack{
                     Text("\(product.pName)").font(.title)
-                    Text("$\(product.pPrice,specifier: "%.2f")").font(.caption)
+
                     Spacer()
                 }.padding(.horizontal)
             }
+            .background(Color.orange)
             .frame(height: 100)
+            Text("$\(product.pPrice,specifier: "%.2f")").font(.title2)
             Spacer()
             Text("Customer Details").font(.headline).frame(alignment: .center)
             Form {
@@ -58,14 +60,13 @@ struct OrderCheckoutView: View {
                 Text("Buy")
                     .foregroundColor(.white)
                     .font(.headline)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: 100)
                     .padding()
-                    .background(Color.blue)
+                    .background(Color.orange)
                     .cornerRadius(10)
             })
             .padding(.horizontal)
             .padding(.bottom, 10)
-            
         }.frame(height: 500)
             .onAppear(){
                 //try to fetch weather using fetchWeatherInfo() function
@@ -74,11 +75,11 @@ struct OrderCheckoutView: View {
                 self.long = self.locationHelper.currentLocation?.coordinate.longitude ?? 0.0
                 print("coordinates: \(lat) \(long)")
             }
-            .onChange(of: self.locationHelper.currentLocation, perform: { _ in
+            .onChange(of: self.locationHelper.currentLocation, perform: { location in
                 print(#function, "current location changed : \(String(describing: self.locationHelper.currentLocation))")
                 
-                self.lat = self.locationHelper.currentLocation?.coordinate.latitude ?? 0.0
-                self.long = self.locationHelper.currentLocation?.coordinate.longitude ?? 0.0
+                self.lat = location?.coordinate.latitude ?? 0.0
+                self.long = location?.coordinate.longitude ?? 0.0
                 print("coordinates: \(lat) \(long)")
             })
             .alert(isPresented: $showingAlert){

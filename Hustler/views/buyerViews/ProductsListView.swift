@@ -21,9 +21,9 @@ struct ProductsListView: View {
                         }
                     }
                 }
-                .background(Color.blue)
                 .frame(height: 500)
             }
+
             Spacer()
         }
     }
