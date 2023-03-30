@@ -64,7 +64,7 @@ struct SignInView: View {
                         .font(.headline)
                         .frame(maxWidth: 100)
                         .padding()
-                        .background(Color.orange)
+                        .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)

@@ -18,7 +18,7 @@ struct OrderDetailView: View {
     var body: some View {
         VStack{
             
-            Text("Order Details").font(.title).foregroundColor(Color.orange).frame(alignment: .center)
+            Text("Order Details").font(.title).foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow))).frame(alignment: .center)
             HStack(spacing:10){
                 VStack{
                     URLImage(URL(string: order.product.pImageURI)!) { image in
@@ -60,7 +60,7 @@ struct OrderDetailView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.orange)
+                            .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                             .cornerRadius(10)
                     })
                     .padding(.horizontal)
@@ -76,7 +76,7 @@ struct OrderDetailView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.orange)
+                            .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                             .cornerRadius(10)
                     })
                     .padding(.horizontal)
@@ -92,7 +92,7 @@ struct OrderDetailView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.orange)
+                            .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                             .cornerRadius(10)
                     })
                     .padding(.horizontal)
@@ -107,7 +107,7 @@ struct OrderDetailView: View {
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.orange)
+                            .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                             .cornerRadius(10)
                     })
                     .padding(.horizontal)

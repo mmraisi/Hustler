@@ -28,7 +28,7 @@ struct OrdersListView: View {
                                 }
                             }
                     }
-                }).tint(Color.orange)
+                }).tint(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                     
                 DisclosureGroup("Completed Orders : \(self.fireDBHelper.completedList.count)", isExpanded: $showCompleted,content:{
                     ForEach(self.fireDBHelper.completedList,id: \.id){order in
@@ -38,7 +38,7 @@ struct OrdersListView: View {
                                 }
                             }
                     }
-                }).tint(Color.orange)
+                }).tint(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
 
                 DisclosureGroup("Canceled Orders : \(self.fireDBHelper.canceledList.count)", isExpanded: $showCanceled,content:{
                     ForEach(self.fireDBHelper.canceledList,id: \.id){order in
@@ -48,7 +48,7 @@ struct OrdersListView: View {
                                 }
                             }
                     }
-                }).tint(Color.orange)
+                }).tint(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                 .alert(isPresented: $showNewOrderAlert) {
                            Alert(
                                title: Text("New Order Added"),
@@ -79,10 +79,10 @@ struct OrdersListView: View {
         .navigationTitle("Hustler")
         .navigationBarItems(leading: HStack {
             Image(systemName: "person.circle.fill")
-                .foregroundColor(Color.orange)
+                .foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
             Text((Auth.auth().currentUser?.email)!)
                                 .font(.headline)
-                                .foregroundColor(Color.orange)
+                                .foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
             
         },trailing: HStack{
             
@@ -90,7 +90,7 @@ struct OrdersListView: View {
                 rootScreen = .Login
             }){
                 Image(systemName: "rectangle.portrait.and.arrow.right")
-                    .foregroundColor(Color.orange)
+                    .foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
             }
         })
     }

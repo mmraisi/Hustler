@@ -22,6 +22,10 @@ struct MainView: View {
     
     @State private var root : RootView = .Login
     
+    init() {
+            UINavigationBar.appearance().tintColor = UIColor(named:"Color") ?? UIColor(Color.yellow)
+        }
+    
     var body: some View {
         NavigationView{
             switch root{

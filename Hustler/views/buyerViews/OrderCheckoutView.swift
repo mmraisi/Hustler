@@ -21,7 +21,7 @@ struct OrderCheckoutView: View {
     let product:Product
     var body: some View {
         VStack{
-            Text("Confirm Order").font(.headline).frame(alignment: .center).foregroundColor(Color.orange)
+            Text("Confirm Order").font(.headline).frame(alignment: .center).foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
             HStack(spacing:10){
                 VStack{
                     URLImage(URL(string: product.pImageURI)!) { image in
@@ -39,7 +39,7 @@ struct OrderCheckoutView: View {
                     Spacer()
                 }.padding(.horizontal)
             }
-            .background(Color.orange)
+            .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
             .frame(height: 100)
             Text("$\(product.pPrice,specifier: "%.2f")").font(.title2)
             Spacer()
@@ -62,7 +62,7 @@ struct OrderCheckoutView: View {
                     .font(.headline)
                     .frame(maxWidth: 100)
                     .padding()
-                    .background(Color.orange)
+                    .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                     .cornerRadius(10)
             })
             .padding(.horizontal)

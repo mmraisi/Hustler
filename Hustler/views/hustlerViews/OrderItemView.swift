@@ -26,7 +26,7 @@ struct OrderItemView: View {
                 Text("\(order.customer.cEmail)")
                     .font(.caption)
                     .fontWeight(.medium)
-                    .foregroundColor(Color.orange)
+                    .foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                 Text(order.product.pName)
                     .font(.system(size: 14))
                     .fontWeight(.medium)

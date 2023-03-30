@@ -48,13 +48,14 @@ struct ContentView: View {
                     self.fireDBHelper.canceledList = (orders ?? [Order]()).filter { $0.isCanceled && !$0.isAccepted && $0.customer.cEmail == Auth.auth().currentUser?.email}
                 }
             })
-            .accentColor(Color.orange)
+            .accentColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
             .navigationTitle("Hustler")
+            .foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
             .navigationBarItems(leading: HStack {
-                Image(systemName: "person.circle.fill").foregroundColor(Color.orange)
+                Image(systemName: "person.circle.fill").foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                 Text((Auth.auth().currentUser?.email)!)
                                     .font(.headline)
-                                    .foregroundColor(Color.orange)
+                                    .foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                 
             },
             trailing: HStack{
@@ -62,7 +63,7 @@ struct ContentView: View {
                     rootScreen = .Login
                 }){
                     Image(systemName: "rectangle.portrait.and.arrow.right")
-                        .foregroundColor(Color.orange)
+                        .foregroundColor(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                 }
             })
         }

@@ -44,7 +44,7 @@ struct ProductDetailView: View {
                     .font(.headline)
                     .frame(maxWidth: 200)
                     .padding()
-                    .background(Color.orange)
+                    .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
                     .cornerRadius(10)
             })
             .padding(.horizontal)
