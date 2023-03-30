@@ -39,7 +39,6 @@ struct OrderCheckoutView: View {
                     Spacer()
                 }.padding(.horizontal)
             }
-            .background(Color(UIColor(named:"Color") ?? UIColor(Color.yellow)))
             .frame(height: 100)
             Text("$\(product.pPrice,specifier: "%.2f")").font(.title2)
             Spacer()
